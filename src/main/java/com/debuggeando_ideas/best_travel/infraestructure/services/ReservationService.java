@@ -91,6 +91,7 @@ public class ReservationService implements IReservationService {
     BeanUtils.copyProperties(reservation, response);
 
     var hotelResponse = new HotelResponse();
+
     BeanUtils.copyProperties(reservation.getHotel(), hotelResponse);
     response.setHotel(hotelResponse);
     return response;

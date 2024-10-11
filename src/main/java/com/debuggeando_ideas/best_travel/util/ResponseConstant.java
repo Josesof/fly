@@ -25,6 +25,13 @@ public class ResponseConstant {
    */
   public static final String RESERVATION_URL = "/reservation";
 
-
+  /**
+   * fly
+   */
   public static final String FLY_URL = "/fly";
+
+  /**
+   * hotel
+   */
+  public static final String HOTEL_URL = "/hotel";
 }

@@ -3,7 +3,7 @@ package com.debuggeando_ideas.best_travel.infraestructure.services;
 import com.debuggeando_ideas.best_travel.api.models.responses.FlyResponse;
 import com.debuggeando_ideas.best_travel.domain.entities.FlyEntity;
 import com.debuggeando_ideas.best_travel.domain.repository.FlyRepository;
-import com.debuggeando_ideas.best_travel.infraestructure.abstract_services.IFlyService;
+import com.debuggeando_ideas.best_travel.infraestructure.abstract_services.IFlyServiceI;
 import com.debuggeando_ideas.best_travel.util.SortType;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,12 +16,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Transactional
 @Service
 @Slf4j
 @AllArgsConstructor
-public class FlyService implements IFlyService {
+public class FlyServiceI implements IFlyServiceI {
 
   private final FlyRepository flyRepository;
   @Override
@@ -37,17 +38,26 @@ public class FlyService implements IFlyService {
 
   @Override
   public Set<FlyResponse> readLessPrice(BigDecimal price) {
-    return null;
+    return this.flyRepository.selectLessPrice(price)
+      .stream()
+      .map(this::entityTResponse)
+      .collect(Collectors.toSet());
   }
 
   @Override
   public Set<FlyResponse> readBetweenPrices(BigDecimal min, BigDecimal max) {
-    return null;
+    return this.flyRepository.selectBetweenPrice(min, max)
+      .stream()
+      .map(this::entityTResponse)
+      .collect(Collectors.toSet());
   }
 
   @Override
   public Set<FlyResponse> readByOriginDestiny(String origen, String destiny) {
-    return null;
+    return this.flyRepository.selectOriginDestiny(origen, destiny)
+      .stream()
+      .map(this::entityTResponse)
+      .collect(Collectors.toSet());
   }
 
   private FlyResponse entityTResponse(FlyEntity entity){
